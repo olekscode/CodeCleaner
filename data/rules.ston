@@ -1,0 +1,4 @@
+[
+	'`@rec doWithIndex: `@arg' : '`@rec withIndexDo: `@arg',
+	'`@rec isEmpty not' : '`@rec isNotEmpty'
+]
