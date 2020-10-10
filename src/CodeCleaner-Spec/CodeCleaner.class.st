@@ -146,6 +146,8 @@ CodeCleaner >> initializePresenters [
 		label: 'Apply';
 		disable;
 		yourself.
+		
+	self loadRules.
 ]
 
 { #category : #initialization }
@@ -155,6 +157,19 @@ CodeCleaner >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: self class defaultTitle;
 		initialExtent: self class preferredExtent.
+]
+
+{ #category : #accessing }
+CodeCleaner >> loadRules [
+	| fileReference loadedRules |
+	
+	fileReference := Path workingDirectory asFileReference / 'pharo-local' / 'iceberg' / 'olekscode' / 'CodeCleaner' / 'data' / 'rules.ston'.
+	
+	loadedRules := fileReference readStreamDo: [ :stream | 
+		STON fromStream: stream ].
+	
+	loadedRules := loadedRules collect: [ :rule | rule asTransformationRule ].
+	self rules: loadedRules.
 ]
 
 { #category : #accessing }
