@@ -1,4 +1,26 @@
 [
 	'`@rec doWithIndex: `@arg' : '`@rec withIndexDo: `@arg',
-	'`@rec isEmpty not' : '`@rec isNotEmpty'
+	'`@rec isEmpty not' : '`@rec isNotEmpty',
+	'`@rec isEmpty ifTrue: `@arg' : '`@rec ifEmpty: `@arg',
+	'`@rec isEmpty ifFalse: `@arg' : '`@rec ifNotEmpty: `@arg',
+	'`@rec isEmpty ifTrue: `@arg1 ifFalse: `@arg2' : '`@rec ifEmpty: `@arg1 ifNotEmpty: `@arg2',
+	'`@rec isEmpty ifFalse: `@arg1 ifTrue: `@arg2' : '`@rec ifNotEmpty: `@arg1 ifEmpty: `@arg2',
+	'`@rec isNotEmpty not' : '`@rec isEmpty',
+	'`@rec isNotEmpty ifTrue: `@arg' : '`@rec ifNotEmpty: `@arg',
+	'`@rec isNotEmpty ifFalse: `@arg' : '`@rec ifEmpty: `@arg',
+	'`@rec isNotEmpty ifTrue: `@arg1 ifFalse: `@arg2' : '`@rec ifNotEmpty: `@arg1 ifEmpty: `@arg2',
+	'`@rec isNotEmpty ifFalse: `@arg1 ifTrue: `@arg2' : '`@rec ifEmpty: `@arg1 ifNotEmpty: `@arg2',
+	'`@rec isNil not' : '`@rec isNotNil',
+	'`@rec isNil ifTrue: `@arg' : '`@rec ifNil: `@arg',
+	'`@rec isNil ifFalse: `@arg' : '`@rec ifNotNil: `@arg',
+	'`@rec isNil ifTrue: `@arg1 ifFalse: `@arg2' : '`@rec ifNil: `@arg1 ifNotNil: `@arg2',
+	'`@rec isNil ifFalse: `@arg1 ifTrue: `@arg2' : '`@rec ifNotNil: `@arg1 ifNil: `@arg2',
+	'`@rec isNotNil not' : '`@rec isNil',
+	'`@rec isNotNil ifTrue: `@arg' : '`@rec ifNotNil: `@arg',
+	'`@rec isNotNil ifFalse: `@arg' : '`@rec ifNil: `@arg',
+	'`@rec isNotNil ifTrue: `@arg1 ifFalse: `@arg2' : '`@rec ifNotNil: `@arg1 ifNil: `@arg2',
+	'`@rec isNotNil ifFalse: `@arg1 ifTrue: `@arg2' : '`@rec ifNil: `@arg1 ifNotNil: `@arg2',
+	'`@rec assert: `@arg1 = `@arg2' : '`@rec assert: `@arg1 equals: `@arg2',
+	'`@rec assert: `@arg not' : '`@rec deny: `@arg',
+	'`@rec assert: `@arg1 ~= `@arg2' : '`@rec deny: `@arg1 equals: `@arg2'
 ]
