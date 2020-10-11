@@ -10,7 +10,7 @@ TransformationRule >> allApplicableMethods [
 	
 	methods := selectors
 		ifEmpty: [ Smalltalk image allClasses flatCollect: [ :eachClass | eachClass methods ] ]
-		ifNotEmpty: [ (selectors inject: selectors first into: [ :allSenders :selector | allSenders intersection: selector senders ]) ].
+		ifNotEmpty: [ (selectors inject: selectors first senders into: [ :allSenders :selector | allSenders intersection: selector senders ]) ].
 		
 	methods := methods asOrderedCollection.
 	^ methods select: [ :method | self canBeAppliedTo: method ].

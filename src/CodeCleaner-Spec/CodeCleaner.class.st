@@ -3,6 +3,8 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'rules',
+		'ruleMethodMapping',
+		'packageRuleMapping',
 		'packageList',
 		'ruleList',
 		'methodList',
@@ -99,6 +101,21 @@ CodeCleaner >> applyRule [
 	self showMethods.
 ]
 
+{ #category : #'as yet unclassified' }
+CodeCleaner >> calculateMappings [
+	ruleMethodMapping := Dictionary new.
+
+	rules
+		do: [ :rule | ruleMethodMapping at: rule put: rule allApplicableMethods asSet ]
+		displayingProgress: [ :rule | rule antecedent ].
+	
+	packageRuleMapping := Dictionary new.
+	
+	ruleMethodMapping keysAndValuesDo: [ :rule :methods |
+		methods do: [ :method |
+			(packageRuleMapping at: method package ifAbsentPut: [ Set new ]) add: rule ] ].
+]
+
 { #category : #initialization }
 CodeCleaner >> connectPresenters [ 
 	super connectPresenters.
@@ -107,7 +124,7 @@ CodeCleaner >> connectPresenters [
 		self showMethods ]. 
 	
 	packageList whenSelectionChangedDo: [ :selection |
-		self showMethods ].
+		self showRules ].
 	
 	methodList whenSelectionChangedDo: [ :selection |
 		self showSourceCode ].
@@ -176,19 +193,29 @@ CodeCleaner >> loadRules [
 CodeCleaner >> rules: aCollectionOfRules [
 	rules := aCollectionOfRules.
 	self showRules.
+	self calculateMappings.
 ]
 
 { #category : #'as yet unclassified' }
 CodeCleaner >> showMethods [
-	(ruleList selectedItem isNotNil and: [ packageList selectedItems isNotEmpty ])
+	(ruleList selectedItem isNil or: [ packageList selectedItems isEmpty ])
 		ifTrue: [
-			methodList items: (self allApplicableMethodsForRule: ruleList selectedItem inPackages: packageList selectedItems) ].
+			methodList items: {}.
+			^ self ].
+			
+	methodList items: ((ruleMethodMapping at: ruleList selectedItem) select: [ :method |
+		packageList selectedItems includes: method package ]) asOrderedCollection.
 ]
 
 { #category : #'as yet unclassified' }
 CodeCleaner >> showRules [
-	rules ifNotNil: [
-		ruleList items: rules ].
+	(rules isNil or: [ packageList selectedItems isEmpty ])
+		ifTrue: [
+			ruleList items: {  }.
+			^ self ].
+		
+	ruleList items: (packageList selectedItems flatCollect: [ :package | 
+		packageRuleMapping at: package ifAbsent: [ Set new ] ]) asSet asOrderedCollection.
 ]
 
 { #category : #'as yet unclassified' }
